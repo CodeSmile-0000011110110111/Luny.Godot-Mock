@@ -16,32 +16,27 @@ namespace Godot
 
 	public static class Engine
 	{
-		public static double GetFramesPerSecond() => throw new NotImplementedException("Godot.Engine.GetFramesPerSecond");
-		public static long GetFramesDrawn() => throw new NotImplementedException("Godot.Engine.GetFramesDrawn");
-		public static ulong GetProcessFrames() => throw new NotImplementedException("Godot.Engine.GetProcessFrames");
-		public static bool IsEditorHint() => throw new NotImplementedException("Godot.Engine.IsEditorHint");
+		public static double GetFramesPerSecond() => 60.0;
+		public static long GetFramesDrawn() => (long)GetProcessFrames();
+		public static ulong GetProcessFrames() => Time.SimulatedFrameCount;
+		public static bool IsEditorHint() => false;
 		public static SceneTree GetMainLoop() => throw new NotImplementedException("Godot.Engine.GetMainLoop");
 	}
 
 	public static class Time
 	{
-		public static ulong GetTicksMsec() => throw new NotImplementedException("Godot.Time.GetTicksMsec");
-		public static ulong GetTicksUsec() => throw new NotImplementedException("Godot.Time.GetTicksUsec");
+		public static ulong SimulatedFrameCount { get; internal set; }
+		public static ulong SimulatedTimeMsec { get; internal set; }
+
+		public static ulong GetTicksMsec() => SimulatedTimeMsec;
+		public static ulong GetTicksUsec() => SimulatedTimeMsec * 1000;
 	}
 
-	public class MeshInstance3D : Node3D
-	{
-		public Mesh Mesh { get; set; }
-	}
-
-	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-	public class ExportAttribute : Attribute {}
-
-	public class Mesh : GodotObject {}
-	public class BoxMesh : Mesh {}
-	public class SphereMesh : Mesh {}
-	public class CapsuleMesh : Mesh {}
-	public class CylinderMesh : Mesh {}
-	public class PlaneMesh : Mesh {}
-	public class QuadMesh : Mesh {}
+	public class Mesh : GodotObject { }
+	public class BoxMesh : Mesh { }
+	public class SphereMesh : Mesh { }
+	public class CapsuleMesh : Mesh { }
+	public class CylinderMesh : Mesh { }
+	public class PlaneMesh : Mesh { }
+	public class QuadMesh : Mesh { }
 }
