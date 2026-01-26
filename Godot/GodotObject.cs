@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Godot
 {
@@ -11,6 +12,26 @@ namespace Godot
 		private readonly UInt64 _instanceId = _nextId++;
 
 		public static Boolean IsInstanceValid(GodotObject obj) => obj != null && _allObjects.Contains(obj);
+
+		public static IEnumerable<T> GetNodes<T>() where T : Node
+		{
+			var root = SceneTree.Instance.Root;
+			return GetNodesInternal<T>(root);
+		}
+
+		private static IEnumerable<T> GetNodesInternal<T>(Node parent) where T : Node
+		{
+			if (parent is T t)
+				yield return t;
+
+			foreach (var child in parent.GetChildren())
+			{
+				foreach (var node in GetNodesInternal<T>(child))
+					yield return node;
+			}
+		}
+
+		public static T GetFirstNode<T>() where T : Node => GetNodes<T>().FirstOrDefault();
 
 		internal static void Reset_UnitTestsOnly()
 		{

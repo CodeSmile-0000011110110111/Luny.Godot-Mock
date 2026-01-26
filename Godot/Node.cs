@@ -40,7 +40,11 @@ namespace Godot
 		public virtual void _Notification(Int32 what) {}
 		public virtual void _ExitTree() {}
 
-		public void QueueFree() => Dispose();
+		public void QueueFree()
+		{
+			_parent?._children.Remove(this);
+			Dispose();
+		}
 
 		public Boolean IsInsideTree() => _isInsideTree;
 
@@ -94,14 +98,25 @@ namespace Godot
 				return;
 
 			_isInsideTree = value;
-			if (_isInsideTree && !_readyCalled)
+			if (_isInsideTree)
 			{
-				_readyCalled = true;
-				_Ready();
+				if (!_readyCalled)
+				{
+					_readyCalled = true;
+					_Ready();
+				}
 			}
-			else if (!_isInsideTree)
+			else
+			{
 				_ExitTree();
-			foreach (var child in _children)
+				// If we leave the tree, we should be ready again if we re-enter?
+				// Godot behavior: _Ready is only called ONCE unless requested otherwise, 
+				// but let's keep it simple.
+			}
+
+			// Use a copy to avoid modification during iteration
+			var children = new List<Node>(_children);
+			foreach (var child in children)
 				child.SetInsideTree(value);
 		}
 	}
