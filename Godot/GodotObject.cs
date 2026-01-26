@@ -8,6 +8,12 @@ namespace Godot
 		private static ulong _nextId = 1;
 		internal static readonly HashSet<GodotObject> _allObjects = new();
 
+		internal static void Reset_UnitTestsOnly()
+		{
+			_nextId = 1;
+			_allObjects.Clear();
+		}
+
 		private readonly ulong _instanceId = _nextId++;
 
 		public GodotObject() => _allObjects.Add(this);

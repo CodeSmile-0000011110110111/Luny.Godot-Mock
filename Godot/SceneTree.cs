@@ -35,6 +35,12 @@ namespace Godot
 			Root.AddChild(CurrentScene);
 			return Error.Ok;
 		}
+
+		public Error ReloadCurrentScene()
+		{
+			if (CurrentScene == null) return Error.Failed;
+			return ChangeSceneToFile(CurrentScene.SceneFilePath);
+		}
 	}
 
 	public enum Error
