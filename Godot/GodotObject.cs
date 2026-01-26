@@ -6,7 +6,7 @@ namespace Godot
 	public class GodotObject : IDisposable
 	{
 		private static ulong _nextId = 1;
-		private static readonly HashSet<GodotObject> _allObjects = new();
+		internal static readonly HashSet<GodotObject> _allObjects = new();
 
 		private readonly ulong _instanceId = _nextId++;
 

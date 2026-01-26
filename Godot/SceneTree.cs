@@ -1,15 +1,45 @@
 using System;
+using System.Linq;
 
 namespace Godot
 {
 	public class SceneTree : GodotObject
 	{
-		public Node Root => throw new NotImplementedException("Godot.SceneTree.Root");
+		public static SceneTree Instance { get; } = new SceneTree();
+
+		public Node Root { get; } = new Node { Name = "Root" };
 		public Node CurrentScene { get; set; }
 
 		public event Action<Node> NodeAdded;
 		public event Action<Node> NodeRemoved;
 
-		public void CallDeferred(string method, params object[] args) => throw new NotImplementedException("Godot.SceneTree.CallDeferred");
+		public SceneTree()
+		{
+			Root.SetInsideTree(true);
+		}
+
+		public void CallDeferred(string method, params object[] args)
+		{
+			var type = GetType();
+			var mi = type.GetMethod(method);
+			mi?.Invoke(this, args);
+		}
+
+		public Error ChangeSceneToFile(string path)
+		{
+			if (CurrentScene != null)
+			{
+				CurrentScene.QueueFree();
+			}
+			CurrentScene = new Node { Name = "NewScene", SceneFilePath = path };
+			Root.AddChild(CurrentScene);
+			return Error.Ok;
+		}
+	}
+
+	public enum Error
+	{
+		Ok = 0,
+		Failed = 1,
 	}
 }

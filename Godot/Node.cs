@@ -10,6 +10,8 @@ namespace Godot
 		private readonly List<Node> _children = new();
 		private bool _isInsideTree;
 
+		internal bool _readyCalled;
+
 		public String Name { get; set; }
 		public String SceneFilePath { get; set; }
 		public ProcessModeEnum ProcessMode { get; set; }
@@ -58,11 +60,7 @@ namespace Godot
 			}
 			node._parent = this;
 			_children.Add(node);
-			node._isInsideTree = this._isInsideTree;
-			if (node._isInsideTree)
-			{
-				node._Ready();
-			}
+			node.SetInsideTree(this._isInsideTree);
 		}
 
 		public Node GetParent() => _parent;
@@ -84,8 +82,17 @@ namespace Godot
 
 		internal void SetInsideTree(bool value)
 		{
+			if (_isInsideTree == value) return;
 			_isInsideTree = value;
-			if (_isInsideTree) _Ready();
+			if (_isInsideTree && !_readyCalled)
+			{
+				_readyCalled = true;
+				_Ready();
+			}
+			else if (!_isInsideTree)
+			{
+				_ExitTree();
+			}
 			foreach (var child in _children) child.SetInsideTree(value);
 		}
 

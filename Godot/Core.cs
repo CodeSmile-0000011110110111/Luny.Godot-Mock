@@ -20,7 +20,7 @@ namespace Godot
 		public static long GetFramesDrawn() => (long)GetProcessFrames();
 		public static ulong GetProcessFrames() => Time.SimulatedFrameCount;
 		public static bool IsEditorHint() => false;
-		public static SceneTree GetMainLoop() => throw new NotImplementedException("Godot.Engine.GetMainLoop");
+		public static SceneTree GetMainLoop() => SceneTree.Instance;
 	}
 
 	public static class Time
