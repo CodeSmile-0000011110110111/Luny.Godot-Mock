@@ -1,36 +1,29 @@
 using System;
-using System.Linq;
 
 namespace Godot
 {
 	public class SceneTree : GodotObject
 	{
-		public static SceneTree Instance { get; } = new SceneTree();
-
-		public Node Root { get; } = new Node { Name = "Root" };
-		public Node CurrentScene { get; set; }
-
 		public event Action<Node> NodeAdded;
 		public event Action<Node> NodeRemoved;
 
-		public SceneTree()
-		{
-			Root.SetInsideTree(true);
-		}
+		public static SceneTree Instance { get; } = new();
 
-		public void CallDeferred(string method, params object[] args)
+		public Node Root { get; } = new() { Name = "Root" };
+		public Node CurrentScene { get; set; }
+		public SceneTree() => Root.SetInsideTree(true);
+
+		public void CallDeferred(String method, params Object[] args)
 		{
 			var type = GetType();
 			var mi = type.GetMethod(method);
 			mi?.Invoke(this, args);
 		}
 
-		public Error ChangeSceneToFile(string path)
+		public Error ChangeSceneToFile(String path)
 		{
 			if (CurrentScene != null)
-			{
 				CurrentScene.QueueFree();
-			}
 			CurrentScene = new Node { Name = "NewScene", SceneFilePath = path };
 			Root.AddChild(CurrentScene);
 			return Error.Ok;
@@ -38,7 +31,9 @@ namespace Godot
 
 		public Error ReloadCurrentScene()
 		{
-			if (CurrentScene == null) return Error.Failed;
+			if (CurrentScene == null)
+				return Error.Failed;
+
 			return ChangeSceneToFile(CurrentScene.SceneFilePath);
 		}
 	}
