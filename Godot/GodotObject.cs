@@ -19,6 +19,14 @@ namespace Godot
 			return GetNodesInternal<T>(root);
 		}
 
+		public static T GetFirstNode<T>() where T : Node => GetNodes<T>().FirstOrDefault();
+
+		internal static void Reset_UnitTestsOnly()
+		{
+			_nextId = 1;
+			_allObjects.Clear();
+		}
+
 		private static IEnumerable<T> GetNodesInternal<T>(Node parent) where T : Node
 		{
 			if (parent is T t)
@@ -29,14 +37,6 @@ namespace Godot
 				foreach (var node in GetNodesInternal<T>(child))
 					yield return node;
 			}
-		}
-
-		public static T GetFirstNode<T>() where T : Node => GetNodes<T>().FirstOrDefault();
-
-		internal static void Reset_UnitTestsOnly()
-		{
-			_nextId = 1;
-			_allObjects.Clear();
 		}
 
 		public GodotObject() => _allObjects.Add(this);

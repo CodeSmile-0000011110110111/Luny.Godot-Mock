@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 
 namespace Godot
 {
@@ -32,12 +31,12 @@ namespace Godot
 			}
 
 			CurrentScene = new Node { Name = path.Replace("res://", ""), SceneFilePath = path };
-			
+
 			// We MUST add it to Root so that OnNativeSceneLoaded works correctly.
 			// When AddChild is called, SetInsideTree(true) will be called on CurrentScene,
 			// which in turn will call SceneTree.Instance.OnNodeAdded(CurrentScene).
 			Root.AddChild(CurrentScene);
-			
+
 			return Error.Ok;
 		}
 
