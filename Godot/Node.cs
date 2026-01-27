@@ -1,4 +1,3 @@
-using Godot.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -72,7 +71,7 @@ namespace Godot
 				node._parent._children.Remove(node);
 			node._parent = this;
 			_children.Add(node);
-			
+
 			// If we are already inside tree, the new child must also enter tree
 			if (_isInsideTree)
 				node.SetInsideTree(true);
@@ -101,7 +100,7 @@ namespace Godot
 				return;
 
 			_isInsideTree = value;
-			
+
 			if (_isInsideTree)
 			{
 				if (!_readyCalled)
@@ -109,7 +108,7 @@ namespace Godot
 					_readyCalled = true;
 					_Ready();
 				}
-				
+
 				SceneTree.Instance.OnNodeAdded(this);
 			}
 			else
@@ -170,9 +169,6 @@ namespace Godot
 		public static Vector3 Zero => new(0, 0, 0);
 		public static Vector3 One => new(1, 1, 1);
 	}
-}
 
-namespace Godot.Collections
-{
 	public class Array<T> : List<T> {}
 }
