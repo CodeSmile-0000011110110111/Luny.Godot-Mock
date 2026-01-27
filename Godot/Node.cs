@@ -72,7 +72,10 @@ namespace Godot
 				node._parent._children.Remove(node);
 			node._parent = this;
 			_children.Add(node);
-			node.SetInsideTree(_isInsideTree);
+			
+			// If we are already inside tree, the new child must also enter tree
+			if (_isInsideTree)
+				node.SetInsideTree(true);
 		}
 
 		public Node GetParent() => _parent;
@@ -92,12 +95,13 @@ namespace Godot
 			mi?.Invoke(this, args);
 		}
 
-		internal void SetInsideTree(Boolean value)
+		public void SetInsideTree(Boolean value)
 		{
 			if (_isInsideTree == value)
 				return;
 
 			_isInsideTree = value;
+			
 			if (_isInsideTree)
 			{
 				if (!_readyCalled)
@@ -105,18 +109,20 @@ namespace Godot
 					_readyCalled = true;
 					_Ready();
 				}
+				
+				SceneTree.Instance.OnNodeAdded(this);
 			}
 			else
 			{
 				_ExitTree();
-				// If we leave the tree, we should be ready again if we re-enter?
-				// Godot behavior: _Ready is only called ONCE unless requested otherwise, 
-				// but let's keep it simple.
+				SceneTree.Instance.OnNodeRemoved(this);
 			}
 
-			// Use a copy to avoid modification during iteration
-			var children = new List<Node>(_children);
-			foreach (var child in children)
+			// Propagate to children
+			// Use a copy because SetInsideTree might trigger child removals/additions in complex scenarios
+			// We MUST use GetChildren() or new List<Node>(_children)
+			var childrenCopy = GetChildren();
+			foreach (var child in childrenCopy)
 				child.SetInsideTree(value);
 		}
 	}
