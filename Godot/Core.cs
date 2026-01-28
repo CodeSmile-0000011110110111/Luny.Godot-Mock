@@ -39,4 +39,10 @@ namespace Godot
 	public class CylinderMesh : Mesh {}
 	public class PlaneMesh : Mesh {}
 	public class QuadMesh : Mesh {}
+
+	public enum Error
+	{
+		Ok = 0,
+		Failed = 1,
+	}
 }

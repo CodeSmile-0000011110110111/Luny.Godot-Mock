@@ -50,21 +50,8 @@ namespace Godot
 
 		internal void OnNodeAdded(Node node) => NodeAdded?.Invoke(node);
 		internal void OnNodeRemoved(Node node) => NodeRemoved?.Invoke(node);
-
-		public void CallDeferred(String method, params Object[] args)
-		{
-			var type = GetType();
-			var mi = type.GetMethod(method);
-			mi?.Invoke(this, args);
-		}
 	}
 
 	// stub to ensure 'partial' isn't removed by "Code Cleanup"
 	public partial class SceneTree {}
-
-	public enum Error
-	{
-		Ok = 0,
-		Failed = 1,
-	}
 }

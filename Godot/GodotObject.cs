@@ -53,5 +53,15 @@ namespace Godot
 			ReferenceEquals(this, obj) || obj is GodotObject other && _instanceId == other._instanceId;
 
 		public override Int32 GetHashCode() => _instanceId.GetHashCode();
+
+		public virtual void _Notification(Int32 what) {}
+
+		public void CallDeferred(String method, params Object[] args)
+		{
+			// Immediate call in mock for simplicity
+			var type = GetType();
+			var mi = type.GetMethod(method);
+			mi?.Invoke(this, args);
+		}
 	}
 }

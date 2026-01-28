@@ -21,8 +21,8 @@ namespace Godot
 			Back,
 		}
 
-		public const Int64 NotificationCrash = 1012;
-		public const Int64 NotificationWMCloseRequest = 1006;
+		public const Int32 NotificationCrash = 1012;
+		public const Int32 NotificationWMCloseRequest = 1006;
 		private readonly List<Node> _children = new();
 		private Node _parent;
 		private Boolean _isInsideTree;
@@ -36,7 +36,7 @@ namespace Godot
 		public virtual void _Ready() {}
 		public virtual void _Process(Double delta) {}
 		public virtual void _PhysicsProcess(Double delta) {}
-		public virtual void _Notification(Int32 what) {}
+		public override void _Notification(Int32 what) {}
 		public virtual void _ExitTree() {}
 
 		public void QueueFree()
@@ -84,14 +84,6 @@ namespace Godot
 			var arr = new Array<Node>();
 			arr.AddRange(_children);
 			return arr;
-		}
-
-		public void CallDeferred(String method, params Object[] args)
-		{
-			// Immediate call in mock for simplicity, or we could queue it
-			var type = GetType();
-			var mi = type.GetMethod(method);
-			mi?.Invoke(this, args);
 		}
 
 		public void SetInsideTree(Boolean value)
