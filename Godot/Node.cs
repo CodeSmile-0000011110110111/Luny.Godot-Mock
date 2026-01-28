@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Godot
 {
-	public class Node : GodotObject
+	public partial class Node : GodotObject
 	{
 		public enum ProcessModeEnum
 		{
@@ -21,15 +21,15 @@ namespace Godot
 			Back,
 		}
 
-		public const Int32 NotificationCrash = 1012;
-		public const Int32 NotificationWMCloseRequest = 1006;
+		public const Int64 NotificationCrash = 1012;
+		public const Int64 NotificationWMCloseRequest = 1006;
 		private readonly List<Node> _children = new();
 		private Node _parent;
 		private Boolean _isInsideTree;
 
 		internal Boolean _readyCalled;
 
-		public String Name { get; set; }
+		public StringName Name { get; set; }
 		public String SceneFilePath { get; set; }
 		public ProcessModeEnum ProcessMode { get; set; }
 
@@ -125,6 +125,9 @@ namespace Godot
 				child.SetInsideTree(value);
 		}
 	}
+
+	// stub to ensure 'partial' isn't removed by "Code Cleanup"
+	public partial class Node {}
 
 	public class Node3D : Node
 	{

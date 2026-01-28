@@ -2,7 +2,7 @@ using System;
 
 namespace Godot
 {
-	public class SceneTree : GodotObject
+	public partial class SceneTree : MainLoop
 	{
 		public event Action<Node> NodeAdded;
 		public event Action<Node> NodeRemoved;
@@ -58,6 +58,9 @@ namespace Godot
 			mi?.Invoke(this, args);
 		}
 	}
+
+	// stub to ensure 'partial' isn't removed by "Code Cleanup"
+	public partial class SceneTree {}
 
 	public enum Error
 	{
