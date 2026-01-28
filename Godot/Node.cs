@@ -21,8 +21,8 @@ namespace Godot
 			Back,
 		}
 
-		public const Int32 NotificationCrash = 1012;
-		public const Int32 NotificationWMCloseRequest = 1006;
+		public const Int64 NotificationCrash = 1012;
+		public const Int64 NotificationWMCloseRequest = 1006;
 		private readonly List<Node> _children = new();
 		private Node _parent;
 		private Boolean _isInsideTree;
