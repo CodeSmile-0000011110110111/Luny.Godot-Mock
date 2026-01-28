@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Luny.Godot-Mock")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77c4103dae174559686067e4a490cd7c6090d0c1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+099a5d489acc784efb5c34b5edc2e5c4e1c96a52")]
 [assembly: System.Reflection.AssemblyProductAttribute("Luny.Godot-Mock")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Luny.Godot-Mock")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
