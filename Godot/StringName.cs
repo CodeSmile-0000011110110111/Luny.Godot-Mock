@@ -2,7 +2,7 @@ using System;
 
 namespace Godot
 {
-	public partial struct StringName : IEquatable<StringName>
+	public struct StringName : IEquatable<StringName>
 	{
 		private readonly String _value;
 
