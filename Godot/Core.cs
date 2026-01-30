@@ -44,10 +44,22 @@ namespace Godot
 	public class Resource : GodotObject {}
 	public class PackedScene : Resource
 	{
+		private Node _bundled;
+
+		public Error Pack(Node path)
+		{
+			_bundled = path?.Duplicate();
+			return Error.Ok;
+		}
+
+		public Boolean CanInstantiate() => _bundled != null;
+
 		public Node Instantiate(Node.InternalMode internalMode = Node.InternalMode.Disabled)
 		{
-			var node = new Node3D { Name = "InstantiatedPrefab" };
-			return node;
+			if (_bundled == null)
+				return null;
+
+			return _bundled.Duplicate();
 		}
 	}
 
@@ -64,6 +76,7 @@ namespace Godot
 			if (path.Contains("Prefab") || path.EndsWith(".tscn") || path.EndsWith(".scn"))
 			{
 				var scene = new PackedScene();
+				scene.Pack(new Node3D { Name = "DefaultMockPrefabRoot" });
 				_loadedResources[path] = scene;
 				return scene;
 			}

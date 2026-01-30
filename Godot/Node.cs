@@ -79,6 +79,19 @@ namespace Godot
 
 		public Node GetParent() => _parent;
 
+		public virtual Node Duplicate(Int32 flags = 15)
+		{
+			var type = GetType();
+			var copy = (Node)Activator.CreateInstance(type);
+			copy.Name = Name;
+			// Simplification: don't copy all properties, just basic ones if needed
+			foreach (var child in _children)
+			{
+				copy.AddChild(child.Duplicate(flags));
+			}
+			return copy;
+		}
+
 		public Array<Node> GetChildren()
 		{
 			var arr = new Array<Node>();
