@@ -86,9 +86,7 @@ namespace Godot
 			copy.Name = Name;
 			// Simplification: don't copy all properties, just basic ones if needed
 			foreach (var child in _children)
-			{
 				copy.AddChild(child.Duplicate(flags));
-			}
 			return copy;
 		}
 
