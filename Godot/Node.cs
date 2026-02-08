@@ -34,8 +34,8 @@ namespace Godot
 		public ProcessModeEnum ProcessMode { get; set; }
 
 		public virtual void _Ready() {}
-		public virtual void _Process(Double delta) {}
-		public virtual void _PhysicsProcess(Double delta) {}
+		public virtual void _Process(Double deltaTime) {}
+		public virtual void _PhysicsProcess(Double deltaTime) {}
 		public override void _Notification(Int32 what) {}
 		public virtual void _ExitTree() {}
 
