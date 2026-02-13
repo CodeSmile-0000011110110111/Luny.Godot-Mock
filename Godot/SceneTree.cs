@@ -52,6 +52,6 @@ namespace Godot
 		internal void OnNodeRemoved(Node node) => NodeRemoved?.Invoke(node);
 	}
 
-	// stub to ensure 'partial' isn't removed by "Code Cleanup"
+	// ensures Rider's "Code Cleanup" won't remove the required 'partial' keyword
 	public partial class SceneTree {}
 }

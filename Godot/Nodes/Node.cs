@@ -129,52 +129,6 @@ namespace Godot
 		}
 	}
 
-	// stub to ensure 'partial' isn't removed by "Code Cleanup"
+	// ensures Rider's "Code Cleanup" won't remove the required 'partial' keyword
 	public partial class Node {}
-
-	public class Node3D : Node
-	{
-		public Vector3 Position { get; set; }
-		public Vector3 Rotation { get; set; }
-		public Vector3 Scale { get; set; } = Vector3.One;
-		public Boolean Visible { get; set; } = true;
-
-		public Boolean IsVisibleInTree() => Visible && (GetParent() is not Node3D p || p.IsVisibleInTree());
-	}
-
-	public class CanvasItem : Node
-	{
-		public Boolean Visible { get; set; } = true;
-		public Boolean IsVisibleInTree() => Visible && (GetParent() is not CanvasItem p || p.IsVisibleInTree());
-	}
-
-	public class MeshInstance3D : Node3D
-	{
-		public Mesh Mesh { get; set; }
-	}
-
-	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-	public class ExportAttribute : Attribute {}
-
-	public class CanvasLayer : Node
-	{
-		public Boolean Visible { get; set; } = true;
-	}
-
-	public struct Vector3
-	{
-		public Single X, Y, Z;
-
-		public Vector3(Single x, Single y, Single z)
-		{
-			X = x;
-			Y = y;
-			Z = z;
-		}
-
-		public static Vector3 Zero => new(0, 0, 0);
-		public static Vector3 One => new(1, 1, 1);
-	}
-
-	public class Array<T> : List<T> {}
 }
