@@ -44,11 +44,20 @@ namespace Godot
 			{
 				switch (index)
 				{
-					case 0: X = value; break;
-					case 1: Y = value; break;
-					case 2: Z = value; break;
-					case 3: W = value; break;
-					default: throw new ArgumentOutOfRangeException(nameof(index));
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					case 3:
+						W = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException(nameof(index));
 				}
 			}
 		}
@@ -66,8 +75,7 @@ namespace Godot
 		public Single Dot(Quaternion with) => System.Numerics.Quaternion.Dot(_value, with._value);
 		public Quaternion Inverse() => FromNumerics(System.Numerics.Quaternion.Inverse(_value));
 
-		public Quaternion Slerp(Quaternion to, Single weight) =>
-			FromNumerics(System.Numerics.Quaternion.Slerp(_value, to._value, weight));
+		public Quaternion Slerp(Quaternion to, Single weight) => FromNumerics(System.Numerics.Quaternion.Slerp(_value, to._value, weight));
 
 		public static Quaternion operator *(Quaternion lhs, Quaternion rhs) =>
 			FromNumerics(System.Numerics.Quaternion.Multiply(lhs._value, rhs._value));
@@ -79,8 +87,8 @@ namespace Godot
 			var s = qn.W;
 			var p = new System.Numerics.Vector3(v.X, v.Y, v.Z);
 			var result = 2f * System.Numerics.Vector3.Dot(u, p) * u
-				+ (s * s - System.Numerics.Vector3.Dot(u, u)) * p
-				+ 2f * s * System.Numerics.Vector3.Cross(u, p);
+			             + (s * s - System.Numerics.Vector3.Dot(u, u)) * p
+			             + 2f * s * System.Numerics.Vector3.Cross(u, p);
 			return new Vector3(result.X, result.Y, result.Z);
 		}
 

@@ -37,10 +37,17 @@ namespace Godot
 			{
 				switch (index)
 				{
-					case 0: X = value; break;
-					case 1: Y = value; break;
-					case 2: Z = value; break;
-					default: throw new ArgumentOutOfRangeException(nameof(index));
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException(nameof(index));
 				}
 			}
 		}
@@ -80,11 +87,9 @@ namespace Godot
 		public Single DistanceTo(Vector3 to) => System.Numerics.Vector3.Distance(_value, to._value);
 		public Single DistanceSquaredTo(Vector3 to) => System.Numerics.Vector3.DistanceSquared(_value, to._value);
 
-		public Vector3 Lerp(Vector3 to, Single weight) =>
-			FromNumerics(System.Numerics.Vector3.Lerp(_value, to._value, weight));
+		public Vector3 Lerp(Vector3 to, Single weight) => FromNumerics(System.Numerics.Vector3.Lerp(_value, to._value, weight));
 
-		public Vector3 Clamp(Vector3 min, Vector3 max) =>
-			FromNumerics(System.Numerics.Vector3.Clamp(_value, min._value, max._value));
+		public Vector3 Clamp(Vector3 min, Vector3 max) => FromNumerics(System.Numerics.Vector3.Clamp(_value, min._value, max._value));
 
 		public Vector3 Reflect(Vector3 normal) => FromNumerics(System.Numerics.Vector3.Reflect(_value, normal._value));
 		public Vector3 Abs() => FromNumerics(System.Numerics.Vector3.Abs(_value));
